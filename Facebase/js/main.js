@@ -33,9 +33,9 @@ return declare( JBrowsePlugin,
 	
         this.browser.afterMilestone( 'completely initialized', function() {
             var ermrest_datasets = "/ermrest/catalog/1/attribute/D:=dataset/"
-            var track_query = "/track_file/accession:=D:accession,title:=D:title,filename:=filename,url:=url";
+            var track_query = "/track_data/RID:=D:RID,title:=D:title,filename:=filename,url:=url";
 
-            var fb = thisB._getUrlParam("fb_dataset");
+            var fb = thisB._getUrlParam("dataset");
             var track_type = thisB._getUrlParam("type");
         
             if (fb != null) {
@@ -45,7 +45,7 @@ return declare( JBrowsePlugin,
                 console.log("Getting FB accession: " + accession_numbers);
                 
                 for (var i = 0; i < accession_numbers.length; i++){
-                    url += "accession=" + accession_numbers[i] + ";";
+                    url += "RID=" + accession_numbers[i] + ";";
                 }
                 url = url.substring(0, url.length - 1);
                 url += track_query;
