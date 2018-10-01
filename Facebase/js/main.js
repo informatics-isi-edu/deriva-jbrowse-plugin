@@ -54,7 +54,12 @@ return declare( JBrowsePlugin,
                     console.log("Found " + results.length + " results");
 		    var resource_list = [];
                     for (var i = 0; i < results.length; i++) {
-                         resource_list[i] = {url: results[i]['url'], type: "bigwig", label: results[i]['filename']};
+                        var track_type = 'bigwig';
+                        if (results[i]['filename'].endsWith('.bb') || results[i]['filename'].includes('.bb:')){
+                                 track_type = 'bigbed';
+                        } else {
+                                resource_list.push({url: results[i]['url'], type: "bigwig", label: results[i]['filename']});
+                        }
 		    }
                 
 		
