@@ -33,7 +33,7 @@ return declare( JBrowsePlugin,
 	
         this.browser.afterMilestone( 'completely initialized', function() {
             var ermrest_datasets = "/ermrest/catalog/1/attribute/D:=dataset/"
-            var track_query = "/track_data/RID:=D:RID,title:=D:title,filename:=filename,url:=url";
+            var track_query = "/track_data/RID:=D:RID,title:=D:title,filename:=filename,url:=url@sort(pipeline,RID)?limit=100";
 
             var fb = thisB._getUrlParam("dataset");
             var track_type = thisB._getUrlParam("type");
@@ -58,7 +58,7 @@ return declare( JBrowsePlugin,
                         if (results[i]['filename'].endsWith('.bb') || results[i]['filename'].includes('.bb:')){
                                  track_type = 'bigbed';
                         } else {
-                                resource_list.push({url: results[i]['url'], type: "bigwig", label: results[i]['filename']});
+                                resource_list.push({url: results[i]['url'], type: "bigwig", label: results[i]['filename'].spli(':')[0]});
                         }
 		    }
                 
