@@ -33,7 +33,7 @@ return declare( JBrowsePlugin,
 	
         this.browser.afterMilestone( 'completely initialized', function() {
             var ermrest_datasets = "/ermrest/catalog/1/attribute/D:=dataset/"
-            var track_query = "/track_data/RID:=D:RID,title:=D:title,filename:=filename,url:=url@sort(pipeline,RID)?limit=100";
+            var track_query = "/track_data/RID:=D:RID,title:=D:title,filename:=filename,url:=url,pipeline@sort(pipeline,RID)?limit=100";
 
             var fb = thisB._getUrlParam("dataset");
             var track_type = thisB._getUrlParam("type");
@@ -50,6 +50,7 @@ return declare( JBrowsePlugin,
                 url = url.substring(0, url.length - 1);
                 url += track_query;
 
+		
                 var configCallback = function(results){
                     console.log("Found " + results.length + " results");
 		    var resource_list = [];
@@ -58,7 +59,7 @@ return declare( JBrowsePlugin,
                         if (results[i]['filename'].endsWith('.bb') || results[i]['filename'].includes('.bb:')){
                                  track_type = 'bigbed';
                         } else {
-                                resource_list.push({url: results[i]['url'], type: "bigwig", label: results[i]['filename'].spli(':')[0]});
+                            resource_list.push({url: results[i]['url'], type: "bigwig", label: results[i]['filename']});
                         }
 		    }
                 
@@ -182,8 +183,8 @@ return declare( JBrowsePlugin,
 
             tl.trackConfs[ n ] =  {
                 store: tl.storeConfs[n],
-                label: n,
-                key: n.replace(/_\d+$/,'').replace(/_/g,' '),
+                label: n.split(":")[0],
+                key: n.replace(/_\d+$/,'').replace(/_/g,' ').split(":")[0],
                 type: trackType,
                 category: "Quantitative Tracks",
                 autoscale: "local" // make locally-opened BigWig tracks default to local autoscaling
